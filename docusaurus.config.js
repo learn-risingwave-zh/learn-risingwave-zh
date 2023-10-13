@@ -57,7 +57,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        title: 'RisingWave 中文教程',
         logo: {
           alt: 'My Site Logo',
           src: 'img/logo.svg',
@@ -69,9 +69,9 @@ const config = {
             position: 'left',
             label: 'Tutorial',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          // {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/risingwavelabs/risingwave',
             label: 'GitHub',
             position: 'right',
           },
@@ -101,8 +101,8 @@ const config = {
                 href: 'https://www.risingwave.com/slack',
               },
               {
-                label: 'GitHub',
-                href: 'https://www.risingwave.com/slack',
+                label: 'Twitter',
+                href: 'https://www.risingwave.com/twitter',
               },
             ],
           },
