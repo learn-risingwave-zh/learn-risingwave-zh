@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # RisingWave 快速入门
 
-本文的目的是让大家能够在 **5分钟之内** 了解 RisingWave 流数据库是什么，并且如何使用。
+本文的目的是让大家能够在 **10分钟之内** 了解 RisingWave 流数据库是什么。
 
 ## 什么是 RisingWave
 
@@ -42,24 +42,84 @@ RisingWave 解决了以下几个常见的流处理系统痛点：
 
 ### 学习曲线陡峭
 
-现有流处理系统几乎都有很陡峭的学习曲线，不光入门难，在入门之后学习核心概念、使用高阶技巧也很难。
+现有流处理系统几乎都有很陡峭的学习曲线，不光入门难，在入门之后学习核心概念、使用进阶功能也很难。不少用户在入坑流处理系统之后，被各种底层概念搞得晕头转向，很难掌握各种进阶技巧，如 window、watermark、join 等等，很难真正用好流计算。
 
-### 资源使用率低
+:::tip RisingWave 解决方式
+RisingWave 提供与 PostgreSQL 兼容的 SQL 接口，并通过 Python、Java 等语言的 UDF 来提升整体表达能力。更重要的是，RisingWave 对底层细节进行了高层封装，让用户无需感知底层实现。
+:::
 
 ### 多流 join 低效
 
-### 大状态管理难
+不少流处理系统都提供了 SQL 接口，用户直接使用 SQL 中的 join 算子来进行多流 join。而由于内部状态管理问题与实现问题，这些流处理系统的 join 算子稳定性差、性能差，只要处理5-10 个流的 join，要么效率低下，要么直接系统挂掉，更不用说处理更多流的 join。
+
+:::tip RisingWave 解决方式
+RisingWave 在多流 join 场景下做了大量优化，尤其是在状态管理方面使用了更精细的管理模式，使系统在进行多流 join 时保持高效与稳定。在生产场景下，RisingWave 能够很好的处理 10-20 个流的 join。
+:::
+
+### 资源使用率低
+
+多数现有流处理系统诞生于大数据时代，使用类 MapReduce 架构暴力使用资源来进行流计算。在这些系统上，每个 job 完全独立，无法共享资源。而用户需要对每个 job 进行资源分配，很容易出现资源分配过多导致浪费的情况。更重要的是，流计算对资源的使用会根据负载变化而变化，由于这些系统并不支持高效动态扩缩容，导致真实生产环境下，用户往往按照负载峰值来分配资源，进一步导致资源使用率低下。
+
+:::tip RisingWave 解决方式
+
+RisingWave 本质是数据库。在数据库中，不同（连续）查询共享资源。用户无需对资源使用进行干预。同时，RisingWave 采用存算分离架构，能够轻松实现动态扩缩容。
+:::
 
 ### 动态扩缩容难
 
+在多数现有流处理中，动态扩缩容支持很弱。究其原因，主要是因为这些系统都采用了存算耦合的架构：内部状态存储与计算高度绑定。这导致了其无法平滑实现动态扩缩容。
+
+:::tip RisingWave 解决方式
+
+RisingWave 采用了存算分离架构，使用远端对象存储持久化计算内部状态，而计算并不绑定内部状态。这使得动态扩缩容基本可以在秒级完成。
+:::
+
+### 大状态管理难
+
+在进行复杂流计算，如 window、join 等时，不少系统会出现性能暴跌甚至崩溃的情况。这是因为在这些系统中，状态保存在本地计算实例，只要状态过大，则会导致性能与稳定性问题。
+
+:::tip RisingWave 解决方式
+
+RisingWave 采用的存算分离架构使计算状态永远持久化远端，而非本地。这使得 RisingWave 用户无需担心内部状态大小问题。为了实现性能最优，RisingWave 只在本地实例中做状态缓存。
+:::
+
 ### 检查点间隔过大
+
+流计算系统定期保存检查点。当故障发生时，系统只需要从最近的检查点开始重新进行计算。重算时间，也就是系统恢复时间，与检查点间隔正相关。多数现有流处理系统的检查点间隔在1分钟以上，而在实际生产环境上，不少将检查点配置在3分钟、5分钟、甚至10分钟（以上）。这是因为这些系统的检查点间隔会影响性能：检查点间隔过小会导致性能大幅下降。当检查点间隔过大时，便会导致当系统故障时，需要较长的恢复时间。而这种长时间的系统无可用在不少对延迟敏感的应用，如金融交易、监控、报警等，来说无法接受。
+
+:::tip RisingWave 解决方式
+
+RisingWave 的内部状态管理方式使得 RisingWave 检查点频率与性能解耦。这也就意味着用户可以将检查点间隔设置的非常小，保证服务宕机时间最小化。默认情况下，RisingWave 的检查点间隔为10秒。
+:::
 
 ### 结果验证困难
 
-### 结果查询架构复杂
+目前常用的流处理系统不带存储。也就是说，流计算发生在流处理系统内部，而计算结果需要被导出到其他系统中。也就是说，如果用户进行流计算，那么数据输入在外部系统，数据输出也在外部系统，只有计算是在流处理系统进行的。可想而知结果验证非常不方便。更重要的是，现有流处理系统每个 job 独立运行，无法直接创建 job 消费其他 job 的结果。这导致每个 job 的逻辑可能会非常复杂，难以调试，也难以验证正确性。
+
+:::tip RisingWave 解决方式
+
+RisingWave 是流数据库，自带存储。流计算结果以物化视图形式持久化下来。也就是说，计算过程与计算结果均在 RisingWave 内部。这使得用户可以轻易验证程序正确性。另外，用户可以在物化视图上叠加构建物化视图，也就是说，用户可以将复杂流计算程序拆解成多个物化视图，让程序编写与结果验证变得非常简单。
+:::
 
 
+### 结果服务架构复杂
 
+由于现有的流处理系统不带存储，用户需要将结果导出到外部系统中去，并在外部系统，如 Cassandra / Redis / PostgreSQL 等，做结果服务（即支持用户高并发查询）。这就意味着用户需要运维两套系统。更困难的是，为了保证结果正确性，用户自己必须考虑如何解决跨系统间的数据一致性问题，带来了不必要的麻烦。
+
+:::tip RisingWave 解决方式
+
+RisingWave 是流数据库，不仅可以存储数据（包括输入数据与计算结果），同时可以支持用户对结果进行高并发访问。用户无需维护两套系统，也无需考虑数据一致性问题。用户永远可以在 RisingWave 看到一致的、新鲜的结果。
+
+:::
+
+### 系统运维难
+
+现有的流处理系统将底层细节暴露给用户，让用户自己配置资源、调节并行度、调节内部状态参数等等。尽管对于高阶用户来说，暴露细节可以调出更好的性能，但是对于多数普通用户来说，暴露这些细节造成了不必要的学习成本，并且可能由于调节失误造成系统效率低下甚至崩溃。
+
+:::tip RisingWave 解决方式
+
+RisingWave 对用户屏蔽不必要的底层细节。用户只需要关注 SQL 代码层面的问题即可。
+:::
 
 
 ## RisingWave 的缺陷
@@ -70,43 +130,14 @@ RisingWave 解决了以下几个常见的流处理系统痛点：
 
 当然，RisingWave 支持 Python / Java 等语言的 UDF。因此，如果你的程序可以使用 UDF 来表示，那么还是可以选用 RisingWave 的。
 
-## RisingWave 与 Flink SQL
+## RisingWave 是否可以平替 Flink SQL？
+
+RisingWave 本身能力是 Flink SQL的超集。从能力角度来讲，Flink SQL 的用户完全可以较为容易的迁移到 RisingWave 上。但要注意的是，RisingWave 与 Flink SQL 在语法上仍然有一些细微差别，因此用户还是可能需要对部分查询进行改写。
 
 
-Get started by **creating a new site**.
+## RisingWave 是否是流批一体系统？
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+“流批一体”这个名词最早是用来描述 Apache Spark、Apache Flink 这样的计算平台，而非数据库。但如果我们将这个概念对应到数据库中，那么流处理就是对新插入的数据进行连续不断的增量计算，而批处理就是对已经存储的数据进行随机批量计算。RisingWave 很显然能够同时支持流处理与批处理。
 
-### What you'll need
+需要注意的是，RisingWave 的强项是流处理。在存储格式方面，由于 RisingWave 采用的是行存，因此 RisingWave 更加适合对已存储的数据做点查，而并非全表扫描。因此，如果用户对随机全表分析查询有大量需求，那么我们更加推荐用户使用 ClickHouse、Apache Doris 等专业的实时分析型数据库。
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
