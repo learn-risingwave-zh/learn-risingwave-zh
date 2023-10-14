@@ -8,7 +8,7 @@ sidebar_position: 1
 
 :::danger 注意
 
-本教程并非正式官方教程，并且不保证与官方文档内容同步。本教程的目的仅是让大家快速学习 RisingWave 流数据库。具体内容还请读者以[**官方文档**](https://docs.risingwave.com/)为准。
+本教程并非正式官方教程，并且不保证与官方文档内容同步（本教程写作时基于2023年9月发布的 RisingWave 1.2.0版本）。本教程的目的仅是让大家快速学习 RisingWave 流数据库。具体内容还请读者以[**官方文档**](https://docs.risingwave.com/)为准。
 
 :::
 
