@@ -128,13 +128,13 @@ RisingWave 对用户屏蔽不必要的底层细节。用户只需要关注 SQL �
 :::
 
 
-## RisingWave 的缺陷
+## RisingWave 的不足
 
-相比于 Apache Flink、Apache Spark Streaming 等流处理系统，RisingWave 最大的缺陷在于其**不支持 Java、Python 等可编程接口**。
+相比于 Apache Flink、Apache Spark Streaming 等流处理系统，RisingWave **不支持 Java、Python 等可编程接口**。不少 Apache Flink、Apache Spark Streaming 的资深用户选择使用了 Java、Python 等接口来进行编程。如果已有代码逻辑过于复杂、无法使用 SQL 改写，那么可能就不适合使用 RisingWave。当然，RisingWave 支持 Python / Java 等语言的 UDF。因此，如果你的程序可以使用 UDF 来表示，那么还是可以选用 RisingWave 的。
 
-不少 Apache Flink、Apache Spark Streaming 的资深用户选择使用了 Java、Python 等接口来进行编程。如果已有代码逻辑过于复杂、无法使用 SQL 改写，那么可能就不适合使用 RisingWave。
+尽管与 PostgreSQL 协议兼容，但 RisingWave 并**不支持事务处理**，因此不能在事务处理应用中平替 PostgreSQL。不少用户将 MySQL、PostgreSQL 等 OLTP 数据库与 RisingWave 组合使用：他们使用 OLTP 数据库做事务处理，然后使用 RisingWave 消费数据库的 CDC，在 RisingWave 内部做流计算。
 
-当然，RisingWave 支持 Python / Java 等语言的 UDF。因此，如果你的程序可以使用 UDF 来表示，那么还是可以选用 RisingWave 的。
+RisingWave 底层存储为行存，适合支持高并发点查。但是，RisingWave **不适合做分析型随机查询**。为支持分析型随机查询，用户还需将数据导入到实时分析数据库中进行操作。不少用户将 RisingWave 与 ClickHouse、Apache Doris 等实时分析数据库组合使用：他们使用 RisingWave 做流计算，同时使用实时分析数据库进行分析型随机查询。
 
 ## RisingWave 是否可以平替 Flink SQL？
 
@@ -145,5 +145,5 @@ RisingWave 本身能力是 Flink SQL的超集。从能力角度来讲，Flink SQ
 
 “流批一体”这个名词最早是用来描述 Apache Spark、Apache Flink 这样的计算平台，而非数据库。但如果我们将这个概念对应到数据库中，那么流处理就是对新插入的数据进行连续不断的增量计算，而批处理就是对已经存储的数据进行随机批量计算。RisingWave 很显然能够同时支持流处理与批处理。
 
-需要注意的是，RisingWave 的强项是流处理。在存储格式方面，由于 RisingWave 采用的是行存，因此 RisingWave 更加适合对已存储的数据做点查，而并非全表扫描。因此，如果用户对随机全表分析查询有大量需求，那么我们更加推荐用户使用 ClickHouse、Apache Doris 等专业的实时分析型数据库。
+需要注意的是，RisingWave 的强项是流处理。在存储格式方面，由于 RisingWave 采用的是行存，因此 RisingWave 更加适合对已存储的数据做点查，而并非全表扫描。因此，如果用户对随机全表分析查询有大量需求，那么我们更加推荐用户使用 ClickHouse、Apache Doris 等实时分析型数据库。
 

@@ -2,5 +2,5 @@
 sidebar_position: 2
 ---
 
-# 窗口函数
+# 窗口函数（windowing）
 
