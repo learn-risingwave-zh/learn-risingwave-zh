@@ -4,32 +4,33 @@ import styles from './styles.module.css';
 
 const FeatureList = [
   {
-    title: 'Easy to Use',
+    title: '易用',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        RisingWave 让用户以使用 PostgreSQL 的方式来进行流处理，
+        大幅降低学习门槛，以及开发、运维负担。
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: '高效',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        RisingWave 让不同流计算任务充分共享资源，并采用存算分离架构管理中间状态，
+        使得复杂流计算高效、稳定、有保障。
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: '开放',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        RisingWave 采用 Apache 2.0 协议开源，
+        并与云生态以及 PostgreSQL 生态拥有丰富集成，
+        让用户轻松建设现代实时数据栈。
       </>
     ),
   },

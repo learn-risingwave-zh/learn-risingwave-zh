@@ -21,13 +21,13 @@ RisingWave 有以下几种安装模式：
 本文所使用的操作系统为 **Ubuntu 20.04.6 LTS**。安装的 RisingWave 版本为 **1.2.0**。整个安装过程约 **3-5分钟**。
 
 ### 下载安装
-```
+```shell
 wget https://github.com/risingwavelabs/risingwave/releases/download/v1.2.0/risingwave-v1.2.0-x86_64-unknown-linux.tar.gz
 tar xvf risingwave-v1.2.0-x86_64-unknown-linux.tar.gz
 ```
 
 ### 启动服务
-```
+```shell
 ./risingwave playground
 ```
 到此，RisingWave 已经启动运行了。
@@ -38,26 +38,26 @@ psql -h localhost -p 4566 -d dev -U root
 ```
 
 `psql` 为 PostgreSQL 官方命令行客户端。可以使用以下命令安装：
-```
+```shell
 sudo apt update
 sudo apt install postgresql-client
 ```
 
 ### 快速验证
 我们创建一个表格与一个物化视图，看看 RisingWave 是否正常运行。
-```
+```sql
 create table t(v1 int, v2 int);
 insert into t values(1,10),(2,20),(3,30);
 create materialized view mv as select sum(v1) from t;
 ```
 
 此时我们查询创建的物化视图：
-```
+```sql
 select * from mv;
 ```
 
 应该能看到结果：
-```
+```sql
  sum
 -----
    6
@@ -65,17 +65,17 @@ select * from mv;
 ```
 
 再向表格中插入两行数据：
-```
+```sql
 insert into t values(4,40),(5,50);
 ```
 
 再查询物化视图：
-```
+```sql
 select * from mv;
 ```
 
 结果应该已经被更新：
-```
+```sql
  sum
 -----
   15

@@ -1,0 +1,8 @@
+{
+  "label": "进阶",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "关于 RisingWave 的进阶功能。"
+  }
+}

@@ -59,7 +59,7 @@ RisingWave 提供与 PostgreSQL 兼容的 SQL 接口，并通过 Python、Java �
 不少流处理系统都提供了 SQL 接口，用户直接使用 SQL 中的 join 算子来进行多流 join。而由于内部状态管理问题与实现问题，这些流处理系统的 join 算子稳定性差、性能差，只要处理5-10 个流的 join，要么效率低下，要么直接系统挂掉，更不用说处理更多流的 join。
 
 :::tip RisingWave 解决方式
-RisingWave 在多流 join 场景下做了大量优化，尤其是在状态管理方面使用了更精细的管理模式，使系统在进行多流 join 时保持高效与稳定。在生产场景下，RisingWave 能够很好的处理 10-20 个流的 join。
+RisingWave 在多流 join 场景下做了大量优化，尤其是在状态管理方面使用了更精细的管理模式，使系统在进行多流 join 时保持高效与稳定。在生产场景下，RisingWave 能够很好的处理 10-20 个（甚至更多）流的 join。
 :::
 
 ### 资源使用率低
