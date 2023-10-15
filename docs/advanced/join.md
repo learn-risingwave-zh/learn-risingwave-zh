@@ -56,6 +56,15 @@ create materialized view m4 as
 
 ## 常用关联关系
 
+在 PostgreSQL 中，最常用的关联关系包括：
+
+* Inner join
+* Left join
+* Right join
+* Full outer join
+
+RisingWave 也支持对这些关联关系进行流计算。
+
 Inner Join
 Left Join
 Right Join
@@ -64,3 +73,5 @@ Natural Join
 Cross Join
 Self Join
 
+
+## 代码示例
