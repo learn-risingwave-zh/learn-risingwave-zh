@@ -62,16 +62,25 @@ create materialized view m4 as
 * Left join
 * Right join
 * Full outer join
+* Natural Join
+* Cross Join
+* Self Join
 
-RisingWave 也支持对这些关联关系进行流计算。
+RisingWave 支持对所有这些关联关系进行随即查询，但并不支持对部分关联关系进行连续查询。为什么？
+原因是，在流计算中，带有 nested loop join 的查询复杂度过高，导致性能过差，且较少真实使用场景，因此不能支持。
 
-Inner Join
-Left Join
-Right Join
-Full Outer Join
-Natural Join
-Cross Join
-Self Join
+
+|  | 支持随机查询<br />（select 语句） | 支持连续查询<br />（create materialized view 语句） |
+| :: | :: | :: |
+|  Inner join   | 是       | `join` 条件必须为等于 |
+|  Left join  | 是        | `join` 条件必须为等于 |
+|  Right join  | 是        | `join` 条件必须为等于 |
+|  Full outer join  | 是        | `join` 条件必须为等于 |
+|  Natural join  | 是        | 是 |
+|  Corss join  | 是        | 否 |
+|  Self join  | 是        | `join` 条件必须为等于 |
+
+如果用户的确想在流计算查询中使用非等于关联关系，则可以考虑使用[动态过滤（dynamic filtering）](https://docs.risingwave.com/docs/current/sql-pattern-dynamic-filters/)。
 
 
 ## 代码示例
