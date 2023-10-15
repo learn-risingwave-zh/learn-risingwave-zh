@@ -1,0 +1,8 @@
+{
+  "label": "系统设计",
+  "position": 6,
+  "link": {
+    "type": "generated-index",
+    "description": "关于 RisingWave 的系统设计。"
+  }
+}

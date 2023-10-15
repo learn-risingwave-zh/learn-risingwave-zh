@@ -143,7 +143,9 @@ ERROR:  QueryError: Scheduler error: Unsupported to query directly from this sou
 这个结果是符合预期的。因为在 RisingWave 中，`table` 会持久化数据，而 `source` 不会，因此用户不能对 `source` 结果进行查询。
 
 :::tip 为什么会有这样的设计？
-一些用户不希望将数据持久化到 RisingWave 中。而如果数据不持久化到 RisingWave 中，则 RisingWave 无法获得数据的**所有权**。如果支持随机查询 `source` 数据，即是要求 RisingWave 直接读取存储在上游系统中的数据。这种跨系统数据读取很容易出现数据不一致问题，因为 RisingWave 无法判断上游系统是否还有其他用户正在进行写操作。为了保证一致性， RisingWave 不支持随机查询 `source`。
+一些用户不希望将数据持久化到 RisingWave 中。而如果数据不持久化到 RisingWave 中，则 RisingWave 无法获得数据的**所有权**。如果支持随机查询 `source` 数据，即是要求 RisingWave 直接读取存储在上游系统中的数据。这种跨系统数据读取很容易出现数据不一致问题，因为 RisingWave 无法判断上游系统是否还有其他用户正在进行写操作。此外，频繁进行跨系统访问会造成系统性能大幅下降。为了保证一致性与性能， RisingWave 不支持随机查询 `source`。
+
+当然正如大家所看到的，一些数据库，如 PostgreSQL （需插件），支持对外部数据源进行随机访问。RisingWave 暂不支持此类随机访问，但有可能被加入到长期开发计划中。如果大家对这一功能有需求，欢迎提出与我们讨论。
 :::
 
 ### 进行流计算
@@ -185,3 +187,5 @@ select * from mv_s1;
 
 这是因为当 `table` 被创建时，RisingWave 就已经开始从上游消费数据，并将数据持久化到系统内部。如果在 `table` 上在任何时间创建物化视图，那么新建的物化视图便会从 `table` 最老的数据开始读起，进行流式计算。
 而当 `source` 被创建时，RisingWave 并不会立刻从上游消费数据。只有当任意一个物化视图在该 `source` 上创建之后，RisingWave 才开始从 `source` 对应的上游消费数据。
+
+回到以上例子。当 `t1` 被创建的瞬间，RisingWave 已经从上游（也就是 `t1` 所对应的 `datagen`）消费数据，并将数据持久化在 `t1` 内。当创建 `mv_t1` 时，RisingWave 会先读取 `t1` 已经保存下来的数据，再继续消费 `datagen` 的数据。而当 `s1` 被创建时，RisingWave 并不会立刻消费数据。直到 `mv_s1` 被创建的瞬间，RisingWave 才开始消费上游数据。因此我们看到了不同的结果。
