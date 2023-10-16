@@ -83,4 +83,4 @@ RisingWave 支持对所有这些关联关系进行随即查询，但并不支持
 如果用户的确想在流计算查询中使用非等于关联关系，则可以考虑使用[动态过滤（dynamic filtering）](https://docs.risingwave.com/docs/current/sql-pattern-dynamic-filters/)。
 
 
-## 代码示例
+<!-- ## 代码示例 -->
