@@ -27,3 +27,103 @@ RisingWave 的核心功能是流计算，而流计算在流数据库中的呈现
 在 RisingWave 中，尽管物化视图是流计算的重要呈现方式，但这并不意味着用户只能创建物化视图才能进行流计算。
 事实上，对于简单的 ETL 计算，也就是仅仅使用 RisingWave 做为流处理管道，将上游系统产生的数据经过加工后发送到下游系统，则可以直接不使用物化视图。
 用户可以简单的使用 [`create sink` 语句](https://docs.risingwave.com/docs/current/sql-create-sink/)直接进行流计算并将结果导出。
+
+
+## 代码示例
+
+相信大家应该都比较熟悉如何在 PostgreSQL 中创建物化视图。在这里，我们展示如何在 RisingWave 中创建堆叠物化视图，即在物化视图上叠加物化视图。
+
+我们希望创建 `table` `t1` 与 `t2` 和 `source` `s1` 与 `s2`，然后在 `t1` 与 `s1` 上创建物化视图 `mv1`， 在 `t2` 与 `s2` 上创建物化视图 `mv2`，再在 `mv1` 与 `mv2` 上创建物化视图 `mv`。
+
+首先创建 `t1` `t2` `s1` `s2`：
+
+```sql
+CREATE TABLE t1 (v1 int, v2 int) 
+WITH (
+     connector = 'datagen',
+
+     fields.v1.kind = 'sequence',
+     fields.v1.start = '1',
+  
+     fields.v2.kind = 'random',
+     fields.v2.min = '-10',
+     fields.v2.max = '10',
+     fields.v2.seed = '1',
+  
+     datagen.rows.per.second = '10'
+ ) ROW FORMAT JSON;
+
+CREATE TABLE t2 (v3 int, v4 int) 
+WITH (
+     connector = 'datagen',
+
+     fields.v3.kind = 'sequence',
+     fields.v3.start = '1',
+  
+     fields.v4.kind = 'random',
+     fields.v4.min = '-10',
+     fields.v4.max = '10',
+     fields.v4.seed = '1',
+  
+     datagen.rows.per.second = '10'
+ ) ROW FORMAT JSON;
+
+CREATE SOURCE s1 (w1 int, w2 int) 
+WITH (
+     connector = 'datagen',
+  
+     fields.w1.kind = 'sequence',
+     fields.w1.start = '1',
+  
+     fields.w2.kind = 'random',
+     fields.w2.min = '-10',
+     fields.w2.max = '10',
+     fields.w2.seed = '1',
+
+     datagen.rows.per.second = '10'
+ ) ROW FORMAT JSON;
+
+
+CREATE SOURCE s2 (w3 int, w4 int) 
+WITH (
+     connector = 'datagen',
+  
+     fields.w3.kind = 'sequence',
+     fields.w3.start = '1',
+  
+     fields.w4.kind = 'random',
+     fields.w4.min = '-10',
+     fields.w4.max = '10',
+     fields.w4.seed = '1',
+
+     datagen.rows.per.second = '10'
+ ) ROW FORMAT JSON;
+```
+
+然后创建 `mv1` 与 `mv2`：
+
+```sql
+create materialized view mv1 as select v2, w2 from t1, s1 where v1 = w1;
+create materialized view mv2 as select v4, w4 from t2, s2 where v3 = w3;
+```
+
+最后再创建 `mv`：
+
+```sql
+create materialized view mv as select w2, w4 from mv1, mv2 where v2 = v4;
+```
+
+我们来验证一下堆叠物化视图是否有被及时更新。我们反复进行以下查询：
+
+```sql
+select count(*) from mv;
+```
+
+我们应该会看到结果会不断变动。以下为示例结果：
+
+```sql
+ count
+-------
+  8092
+(1 row)
+```

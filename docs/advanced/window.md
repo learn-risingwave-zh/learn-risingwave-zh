@@ -19,6 +19,8 @@ RisingWave 支持流处理中两种重要的时间窗口：
 
 
 
+## 代码示例
+
 假设我们有一条出租车行程数据流：
 
 trip_id|  taxi_id	|completed_at	    |distance| duration
