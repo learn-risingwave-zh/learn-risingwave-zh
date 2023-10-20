@@ -141,3 +141,8 @@ RisingWave 对用户屏蔽不必要的底层细节。用户只需要关注 SQL �
 尽管与 PostgreSQL 协议兼容，但 RisingWave 并**不支持事务处理**，因此不能在事务处理应用中平替 PostgreSQL。不少用户将 MySQL、PostgreSQL 等 OLTP 数据库与 RisingWave 组合使用：他们使用 OLTP 数据库做事务处理，然后使用 RisingWave 消费数据库的 CDC，在 RisingWave 内部做流计算。
 
 RisingWave 底层存储为行存，适合支持高并发点查。但是，RisingWave **不适合做分析型随机查询**。为支持分析型随机查询，用户还需将数据导入到实时分析数据库中进行操作。不少用户将 RisingWave 与 ClickHouse、Apache Doris 等实时分析数据库组合使用：他们使用 RisingWave 做流计算，同时使用实时分析数据库进行分析型随机查询。
+
+
+## RisingWave 使用场景
+
+RisingWave 的主要使用场景包括了监控、报警、实时动态报表、流式 ETL、机器学习特征工程等。其已经运用到金融交易、制造业、新媒体、物流等领域。
