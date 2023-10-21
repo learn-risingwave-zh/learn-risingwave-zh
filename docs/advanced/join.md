@@ -66,7 +66,7 @@ create materialized view m4 as
 * Cross Join
 * Self Join
 
-RisingWave 支持对所有这些关联关系进行随即查询，但并不支持对部分关联关系进行连续查询。为什么？
+RisingWave 支持对所有这些关联关系进行随机查询，但并不支持对部分关联关系进行连续查询。为什么？
 原因是，在流计算中，带有 nested loop join 的查询复杂度过高，导致性能过差，且较少真实使用场景，因此不能支持。
 
 
