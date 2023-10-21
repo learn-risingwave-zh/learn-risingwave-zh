@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'RisingWave 中文教程（试读版）',
-  tagline: '面向流计算爱好者的简明教程！',
+  tagline: '面向流计算爱好者的动手教程！',
   url: 'https://risingwavetutorial.com/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
