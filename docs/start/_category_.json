@@ -1,8 +1,0 @@
-{
-  "label": "开始动手",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "快速部署 RisingWave 与其他一些系统组件。"
-  }
-}
