@@ -1,0 +1,36 @@
+.links-wrapper {
+  position: relative;
+  padding-bottom: 100px;
+}
+.links-wrapper .qr-code {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+  top: 0;
+  left: calc(50% - 250px);
+  border-radius: 12px;
+}
+
+.qr-code img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 850px) {
+  .links-wrapper .qr-code {
+    width: 400px;
+    left: auto;
+    right: 0;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .links-wrapper .qr-code {
+    position: relative;
+    width: 90%;
+    display: block;
+    margin: 0 auto;
+  }
+}
