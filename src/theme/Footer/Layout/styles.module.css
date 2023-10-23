@@ -18,19 +18,23 @@
   object-fit: contain;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1270px) {
   .links-wrapper .qr-code {
-    width: 400px;
-    left: auto;
+    width: 500px;
+    justify-content: space-around;
     right: 0;
+    left: auto;
   }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 800px) {
+  .links-wrapper {
+    padding-bottom: 0;
+  }
   .links-wrapper .qr-code {
     position: relative;
-    width: 90%;
-    display: block;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 }
