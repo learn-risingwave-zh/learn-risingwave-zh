@@ -10,14 +10,14 @@ RisingWave 有以下几种安装模式：
 
 - **单机试玩模式（[官方文档](https://docs.risingwave.com/docs/current/risingwave-trial/?method=overview)）**：如果你只是想学如何使用 RisingWave，那么单机试玩模式应该能够满足基本需求。但是单机试玩模式并不支持一些复杂功能，如 Change Data Capture (CDC) 等；
 
-- **单机 Docker 部署模式（[官方文档](https://docs.risingwave.com/docs/current/risingwave-trial/?method=docker-compose)）**：单机 Docker 部署模式功能齐全，但如果希望在生产环境使用，仍需要三思。毕竟，如果物理机器宕机，会直接导致系统不可用或数据丢失；
+- **单机 Docker Compose 部署模式（[官方文档](https://docs.risingwave.com/docs/current/risingwave-trial/?method=docker-compose)）**：单机 Docker 部署模式功能齐全，但如果希望在生产环境使用，仍需要三思。毕竟，如果物理机器宕机，会直接导致系统不可用或数据丢失；
 
 - **集群 Kubernetes 部署模式（[官方文档](https://docs.risingwave.com/docs/dev/risingwave-kubernetes/)）**：集群 Kubernetes 部署是最为推荐的生产环境部署模式。
 
 |  | 耗时 | 功能集 | 生产环境使用？ |
 | :: | :: | :: | :: |
 |  [单机试玩模式](https://docs.risingwave.com/docs/current/risingwave-trial/?method=overview)   |  5 分钟      | 局限 | 否 |
-|  [单机 Docker 部署模式](https://docs.risingwave.com/docs/current/risingwave-trial/?method=docker-compose)  | 10-20 分钟        | 完整 | 是，但请三思 |
+|  [单机 Docker Compose 部署模式](https://docs.risingwave.com/docs/current/risingwave-trial/?method=docker-compose)  | 10-20 分钟        | 完整 | 是，但请三思 |
 |  [集群 Kubernetes 部署模式](https://docs.risingwave.com/docs/dev/risingwave-kubernetes/)  | 不定        | 完整 | 是，推荐 |
 
 ## 安装方法
