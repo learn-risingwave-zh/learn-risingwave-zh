@@ -47,9 +47,14 @@ RisingWave 是一款开源（Apache 2.0 协议）分布式流数据库。其与 
 
 ## RisingWave 解决的流处理痛点
 
-市面上已经有了一些知名的开源流处理系统，如 Apache Flink、Apache Spark Streaming 等。那为什么我们需要使用 RisingWave？
+市面上已经有了一些知名的开源流处理系统，如 Apache Flink、Apache Spark Streaming、KsqlDB 等。那为什么我们需要使用 RisingWave？
 
-RisingWave 解决了以下几个常见的流处理系统痛点：
+对比于其他流处理系统，RisingWave 主要聚焦在两大方面：**易用性**与**成本效率**。简单来说：
+
+- RisingWave 为用户带来了 PostgreSQL 般的体验来进行流处理，大幅降低使用流计算技术的门槛；
+- RisingWave 实现了类似于 Snowflake 的存算分离架构，从而实现计算与存储成本的大幅降低。
+
+从用户角度来讲，RisingWave 解决了以下几个常见的流处理系统痛点：
 
 ### 学习曲线陡峭
 
