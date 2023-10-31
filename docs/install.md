@@ -8,7 +8,7 @@ sidebar_position: 2
 
 RisingWave 有以下几种安装模式：
 
-- **单机试玩模式（[官方文档](https://docs.risingwave.com/docs/current/risingwave-trial/?method=overview)）**：如果你只是想学如何使用 RisingWave，那么单机试玩模式应该能够满足基本需求。但是单机试玩模式并不支持一些复杂功能，如 Change Data Capture (CDC) 等；
+- **单机试玩模式（[官方文档](https://docs.risingwave.com/docs/current/risingwave-trial/?method=overview)）**：如果你只是想学如何使用 RisingWave，那么单机试玩模式应该能够满足基本需求。但是单机试玩模式并不支持一些复杂功能，如 Change Data Capture (CDC) 等，且不可用于生产环境；
 
 - **单机 Docker Compose 部署模式（[官方文档](https://docs.risingwave.com/docs/current/risingwave-trial/?method=docker-compose)）**：单机 Docker 部署模式功能齐全，但如果希望在生产环境使用，仍需要三思。毕竟，如果物理机器宕机，会直接导致系统不可用或数据丢失；
 
@@ -22,21 +22,30 @@ RisingWave 有以下几种安装模式：
 
 ## 安装方法
 
-由于本教程的目的是让大家了解并使用 RisingWave，因此我们选用 **单机试玩模式**。注意，单机试玩版本为纯内存模式，在闲置30分钟后会自动停止。
+由于本教程的目的是让大家了解并使用 RisingWave，因此我们选用 **单机试玩模式**。整个安装验证过程**仅需 5 分钟**。注意，单机试玩版本为纯内存模式，在闲置30分钟后会自动停止。
 
-本文所使用的操作系统为 **Ubuntu 20.04.6 LTS**。安装的 RisingWave 版本为 **1.2.0**。整个安装过程约 **3-5分钟**。
 
 ### 下载安装
+**Mac 环境**
 ```shell
-wget https://github.com/risingwavelabs/risingwave/releases/download/v1.2.0/risingwave-v1.2.0-x86_64-unknown-linux.tar.gz
-tar xvf risingwave-v1.2.0-x86_64-unknown-linux.tar.gz
+brew tap risingwavelabs/risingwave
+brew install risingwave
+risingwave playground
 ```
 
-### 启动服务
+**Ubuntu 环境**
 ```shell
+wget https://github.com/risingwavelabs/risingwave/releases/download/v1.3.0/risingwave-v1.3.0-x86_64-unknown-linux.tar.gz
+tar xvf risingwave-v1.3.0-x86_64-unknown-linux.tar.gz
 ./risingwave playground
 ```
-到此，RisingWave 已经启动运行了。
+
+**Docker 环境**
+```shell
+docker run -it --pull=always -p 4566:4566 -p 5691:5691 risingwavelabs/risingwave:latest playground
+```
+
+到此，RisingWave 已经安装并启动运行了。
 
 ### 使用 `psql` 连接
 ```shell
