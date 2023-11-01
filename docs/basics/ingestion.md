@@ -179,7 +179,7 @@ select count(*) from s1;
 ERROR:  QueryError: Scheduler error: Unsupported to query directly from this source
 ```
 
-这个结果是符合预期的。因为在 RisingWave 中，`table` 会持久化数据，而 `source` 不会，因此用户不能对除 Kafka 以外的 `source` 进行查询。
+这个结果是符合预期的。因为在 RisingWave 中，用户不能对除 Kafka 以外的 `source` 进行查询。
 
 ### 进行流计算
 
