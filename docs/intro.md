@@ -8,12 +8,12 @@ sidebar_position: 1
 
 :::danger 注意1
 
-本教程并非正式官方教程，并且不保证与官方文档内容同步（本教程写作时基于2023年9月发布的 RisingWave 1.2.0版本）。本教程的目的仅是让大家快速学习 RisingWave 流数据库。具体内容还请读者以[**官方文档**](https://docs.risingwave.com/)为准。
+本教程并非正式官方教程，并且不保证与官方文档内容同步（本教程写作时基于2023年10月发布的 RisingWave 1.3.0版本）。本教程的目的仅是让大家快速学习 RisingWave 流数据库。具体内容还请读者以[**官方文档**](https://docs.risingwave.com/)为准。
 :::
 
 :::danger 注意2
 本教程仍在持续开发中。最新更新日期为：
-**2023年10月15日**。
+**2023年11月1日**。
 欢迎对 RisingWave、流处理、数据库或是数据工程感兴趣的朋友们提出宝贵的建议！
 :::
 
@@ -22,6 +22,11 @@ sidebar_position: 1
 RisingWave 是一款流数据库。简单来说，流数据库就是让用户可以用使用数据库的方式来处理流数据，进行连续不断的实时流计算，并提供数据存储与随机查询的功能。
 
 RisingWave 是一款开源（Apache 2.0 协议）分布式流数据库。其与 PostgreSQL 传输协议兼容，也就是说，用户可以像使用 PostgreSQL 一样使用 RisingWave。
+
+<img
+  src={require('./img/new_archi_grey.png').default}
+  alt="RisingWave Architecture"
+/>
 
 **用户可以使用 RisingWave 来进行**：
 

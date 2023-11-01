@@ -107,7 +107,11 @@ const config = {
                 href: 'https://risingwave.com/',
               },
               {
-                label: 'Slack',
+                label: '本教程 GitHub 仓库',
+                href: 'https://github.com/learn-risingwave-zh/learn-risingwave-zh',
+              },
+              {
+                label: 'Slack 社区',
                 href: 'https://www.risingwave.com/slack',
               },
               {

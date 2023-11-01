@@ -30,6 +30,7 @@ WITH (
 ...
 ```
 
+
 创建好 `table` 或 `source` 之后，RisingWave 便会源源不断地从上游系统拉数据。
 
 
@@ -42,11 +43,49 @@ WITH (
 
 `table` 与 `source` 有一个非常本质的区别：`table` 会持久化消费的数据，而 `source` 不会。
 
+
+
+
+
+
 比如说，上游如果输入了5条记录：`AA` `BB` `CC` `DD` `EE`，如果使用 `table`，则这5条记录会被持久化到 RisingWave 内部；如果使用 `source`，则这些记录不会被持久化。
 
-使用 `table` 持久化记录带来的很大好处便是能够加速查询。 毕竟数据如果在同一个系统中，查询自然会高效非常多。当然缺点就是占存储。另一个好处便是可以消费数据变更。也就是说，上游系统如果删除或者更新了一条记录，那么这条操作会被 RisingWave 消费，从而修改流计算的结果。而 `source` 只支持追加记录，无法处理数据变更。
 
-当然，想让 `table` 接受数据变更，必须在 `table` 上指定主键。
+
+下图展示了在 RisingWave 中创建 `table` 时的逻辑。
+
+<img
+  src={require('../img/create_table_mv.png').default}
+  alt="RisingWave Architecture"
+/>
+
+这边有几个要点值得注意：
+
+- 当用户发送 `create table` 请求之后，相应的表会立刻被创建并填入数据；
+- 当用户在创建好的 `table` 上建立物化视图时，RisingWave 会从 `table` 里开始读数据，进行流计算；
+- RisingWave 的批处理引擎支持直接批量读取 `table`。用户可以直接发送随机查询，查看 `table` 内部的数据。
+
+使用 `table` 持久化记录带来的很大好处便是能够加速查询。 毕竟数据如果在同一个系统中，查询自然会高效非常多。当然缺点就是占存储。另一个好处便是可以消费数据变更。也就是说，上游系统如果删除或者更新了一条记录，那么这条操作会被 RisingWave 消费，从而修改流计算的结果。而 `source` 只支持追加记录，无法处理数据变更。当然，想让 `table` 接受数据变更，必须在 `table` 上指定主键。
+
+
+下图展示了在 RisingWave 中创建 `source` 时的逻辑。
+<img
+  src={require('../img/create_source_mv.png').default}
+  alt="RisingWave Architecture"
+/>
+
+几个值得注意的点：
+
+- 当用户发送 `create source` 请求之后，并不会创建任何物理对象，也不会立刻从 `source` 里读取数据；
+- 只有当用户在该 `source` 上创建物化视图或者 `sink` 时，才会从 `source` 里开始读取数据；
+- RisingWave 的批处理引擎在 1.3 版本（及之前）仅支持从 Kafka 中批量读取 `source`。 当用户发送随机查询访问 `source` 时，会报异常。
+
+
+:::tip 为什么会有这样的设计？
+一些用户不希望将数据持久化到 RisingWave 中。而如果数据不持久化到 RisingWave 中，则 RisingWave 无法获得数据的**所有权**。如果支持随机查询 `source` 数据，即是要求 RisingWave 直接读取存储在上游系统中的数据。这种跨系统数据读取很容易出现数据不一致问题，因为 RisingWave 无法判断上游系统是否还有其他用户正在进行写操作。此外，频繁进行跨系统访问会造成系统性能大幅下降。为了保证一致性与性能， RisingWave 从**初始设计**上不支持随机查询 `source`。
+
+当然正如大家所看到的，一些数据库，如 PostgreSQL （需插件），支持对外部数据源进行随机访问。根据用户要求，RisingWave 首先支持了对 Kafka 的随机查询功能。支持对更多系统的随机查询可能会被加入到[开发路线图](https://github.com/risingwavelabs/risingwave/issues/13115)中。如果大家对这一功能有需求，欢迎提出与我们讨论。
+:::
 
 ## 代码示例
 
@@ -140,13 +179,7 @@ select count(*) from s1;
 ERROR:  QueryError: Scheduler error: Unsupported to query directly from this source
 ```
 
-这个结果是符合预期的。因为在 RisingWave 中，`table` 会持久化数据，而 `source` 不会，因此用户不能对 `source` 结果进行查询。
-
-:::tip 为什么会有这样的设计？
-一些用户不希望将数据持久化到 RisingWave 中。而如果数据不持久化到 RisingWave 中，则 RisingWave 无法获得数据的**所有权**。如果支持随机查询 `source` 数据，即是要求 RisingWave 直接读取存储在上游系统中的数据。这种跨系统数据读取很容易出现数据不一致问题，因为 RisingWave 无法判断上游系统是否还有其他用户正在进行写操作。此外，频繁进行跨系统访问会造成系统性能大幅下降。为了保证一致性与性能， RisingWave 不支持随机查询 `source`。
-
-当然正如大家所看到的，一些数据库，如 PostgreSQL （需插件），支持对外部数据源进行随机访问。RisingWave 暂不支持此类随机访问，但有可能被加入到长期开发计划中。如果大家对这一功能有需求，欢迎提出与我们讨论。
-:::
+这个结果是符合预期的。因为在 RisingWave 中，`table` 会持久化数据，而 `source` 不会，因此用户不能对除 Kafka 以外的 `source` 进行查询。
 
 ### 进行流计算
 

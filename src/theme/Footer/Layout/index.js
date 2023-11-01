@@ -18,7 +18,7 @@ export default function FooterLayout({ style, links, logo, copyright }) {
           <div className={clsx(styles["qr-code"])}>
             <div>
               <img src={publicCode} alt="wx-group" />
-              <p> RisingWave订阅号</p>
+              <p> RisingWave 微信订阅号</p>
             </div>
             <div>
               <img src={assistantCode} alt="wx-group" />
