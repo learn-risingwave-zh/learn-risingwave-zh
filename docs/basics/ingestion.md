@@ -56,7 +56,7 @@ WITH (
 
 <img
   src={require('../img/create_table_mv.png').default}
-  alt="RisingWave Architecture"
+  alt="Create table in RisingWave."
 />
 
 这边有几个要点值得注意：
@@ -71,7 +71,7 @@ WITH (
 下图展示了在 RisingWave 中创建 `source` 时的逻辑。
 <img
   src={require('../img/create_source_mv.png').default}
-  alt="RisingWave Architecture"
+  alt="Create source in RisingWave."
 />
 
 几个值得注意的点：
