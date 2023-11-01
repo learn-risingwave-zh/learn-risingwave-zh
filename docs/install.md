@@ -26,6 +26,11 @@ RisingWave 有以下几种安装模式：
 
 
 ### 下载安装
+**Docker 环境**
+```shell
+docker run -it --pull=always -p 4566:4566 -p 5691:5691 risingwavelabs/risingwave:latest playground
+```
+
 **Mac 环境**
 ```shell
 brew tap risingwavelabs/risingwave
@@ -38,11 +43,6 @@ risingwave playground
 wget https://github.com/risingwavelabs/risingwave/releases/download/v1.3.0/risingwave-v1.3.0-x86_64-unknown-linux.tar.gz
 tar xvf risingwave-v1.3.0-x86_64-unknown-linux.tar.gz
 ./risingwave playground
-```
-
-**Docker 环境**
-```shell
-docker run -it --pull=always -p 4566:4566 -p 5691:5691 risingwavelabs/risingwave:latest playground
 ```
 
 到此，RisingWave 已经安装并启动运行了。
