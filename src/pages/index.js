@@ -32,7 +32,7 @@ export default function Home() {
     <Layout
       // title={`${siteConfig.title}`}
       title={`面向流计算爱好者的动手教程！`}
-      description="Description will go into a meta tag in <head />">
+      description="RisingWave 中文教程">
       <HomepageHeader />
       <main>
         <HomepageFeatures />
