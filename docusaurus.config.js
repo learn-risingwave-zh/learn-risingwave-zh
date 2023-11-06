@@ -4,6 +4,9 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+const thumbnail =
+  "https://risingwave.com/wp-content/uploads/2023/11/thumbnail.png";
+
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "RisingWave 中文教程（试读版）",
@@ -139,7 +142,15 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-      image: "https://risingwave.com/wp-content/uploads/2023/11/thumbnail.png",
+      metadata: [
+        { name: "og:image", content: thumbnail },
+        { name: "og:image:width", content: "1200" },
+        { name: "og:image:height", content: "628" },
+        { name: "og:image:type", content: "image/png" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:image", content: thumbnail },
+      ],
+      image: thumbnail,
     }),
 };
 
