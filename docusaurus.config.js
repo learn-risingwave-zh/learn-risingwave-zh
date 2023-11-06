@@ -4,7 +4,7 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
-const thumbnail = `https://learn-risingwave-zh-git-update-index-images-learn-risingwave.vercel.app/img/thumbnail.png`;
+const thumbnail = `https://risingwavetutorial.com/img/thumbnail.png`;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
