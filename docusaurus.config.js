@@ -134,12 +134,12 @@ const config = {
           // },
         ],
         copyright: `Copyright © ${new Date().getFullYear()}. Built with Docusaurus.`,
-        image: "./static/img/thumbnail.png",
       },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
+      image: "./static/img/thumbnail.png",
     }),
 };
 
