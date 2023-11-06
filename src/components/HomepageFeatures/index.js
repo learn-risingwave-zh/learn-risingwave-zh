@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 const LeftImage = () => {
   return (
     <img
-      style={{ width: "200px", height: "200px" }}
+      style={{ height: "200px" }}
       src={require("../../../static/img/ease-of-use.png").default}
       alt="left"
     />
@@ -15,7 +15,7 @@ const LeftImage = () => {
 const MidImage = () => {
   return (
     <img
-      style={{ width: "259px", height: "200px" }}
+      style={{ height: "200px", padding: "20px" }}
       src={require("../../../static/img/efficient.png").default}
       alt="mid"
     />
@@ -25,7 +25,7 @@ const MidImage = () => {
 const RightImage = () => {
   return (
     <img
-      style={{ width: "165px", height: "200px" }}
+      style={{ height: "200px" }}
       src={require("../../../static/img/open.png").default}
       alt="right"
     />
