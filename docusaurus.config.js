@@ -139,7 +139,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-      image: "img/thumbnail.png",
+      image: "https://risingwave.com/wp-content/uploads/2023/11/thumbnail.png",
     }),
 };
 

@@ -16,12 +16,15 @@ function HomepageHeader() {
         backgroundImage: `url(${
           require("../../static/img/banner.png").default
         })`,
-        backgroundSize: "100% 100%",
       }}
     >
       <div className="container">
-        <h1 className="hero__title">{siteConfig.title}</h1>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <h1 className={clsx("hero__title", styles.title)}>
+          {siteConfig.title}
+        </h1>
+        <p className={clsx("hero__subtitle", styles.subtitle)}>
+          {siteConfig.tagline}
+        </p>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
