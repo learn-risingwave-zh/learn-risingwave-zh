@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 const FeatureList = [
   {
     title: '易用',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/ease-of-use.svg').default,
     description: (
       <>
         RisingWave 让用户以使用 PostgreSQL 的方式来进行流处理，
@@ -15,7 +15,7 @@ const FeatureList = [
   },
   {
     title: '高效',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/efficient.svg').default,
     description: (
       <>
         RisingWave 让不同流计算任务充分共享资源，并采用存算分离架构管理中间状态，
@@ -25,7 +25,7 @@ const FeatureList = [
   },
   {
     title: '开放',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/open.svg').default,
     description: (
       <>
         RisingWave 采用 Apache 2.0 协议开源，
