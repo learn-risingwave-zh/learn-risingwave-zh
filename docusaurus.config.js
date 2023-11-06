@@ -139,7 +139,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
-      image: "./static/img/thumbnail.png",
+      image: "img/thumbnail.png",
     }),
 };
 
