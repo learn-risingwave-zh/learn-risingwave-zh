@@ -12,6 +12,10 @@
   border-radius: 12px;
 }
 
+.qr-code > div {
+  text-align: center;
+}
+
 .qr-code img {
   width: 150px;
   height: 150px;
