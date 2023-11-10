@@ -48,7 +48,7 @@ CREATE TABLE orders (
 );
 ```
 
-如果我们希望通过用户的手机号来查询用户订单,我们可以通过在`c_phone`列上建立索引,来加速查询。
+如果我们希望通过用户的手机号来查询用户订单,我们可以通过在`c_phone`列上建立索引来加速查询。
 
 ```sql
 CREATE INDEX idx_c_phone on customers(c_phone);
@@ -79,7 +79,7 @@ SELECT * FROM people WHERE (first_name || ' ' || last_name) = 'John Smith';
 
 ## 如何选择INCLUDE列
 
-默认情况下，如果您省略 INCLUDE 子句，RisingWave 会创建一个包含表或物化视图所有列的索引，这与标准的 PostgreSQL 有所不同。为什么呢？RisingWave 作为云原生流式数据库的设计，包含与 PostgreSQL 不同的几个关键之处，包括使用对象存储进行更具成本效益的存储，以及希望使索引的创建对于那些不熟悉数据库系统的用户尽可能简单。通过包含所有列，RisingWave 确保索引将覆盖查询所涉及的所有列，并消除了需要在主表中进行查找的需求，这在云环境中由于网络通信而可能较慢。然而，对于希望这样做的用户，RisingWave 仍然提供了使用 INCLUDE 子句仅包含特定列的选项。
+默认情况下，如果您省略 INCLUDE 子句，RisingWave 会创建一个包含表或物化视图所有列的索引，这与标准的 PostgreSQL 有所不同。为什么呢？RisingWave 作为云原生流数据库，与 PostgreSQL 有几个不同的关键之处，包括使用对象存储进行更具成本效益的存储，以及希望对于那些不熟悉数据库系统的用户创建索引尽可能简单。通过包含所有列，RisingWave 确保索引将覆盖查询所涉及的所有列，并消除了需要在主表中进行回表查询的需要。然而，对于希望自己控制include列的用户，RisingWave 仍然提供了使用 INCLUDE 子句仅包含特定列的选项。
 
 例如：
 
@@ -96,7 +96,7 @@ SELECT c_name, c_address FROM customers WHERE c_phone = '123456789';
 
 ## 如何选择DISTRIBUTED列
 
-如果您省略 DISTRIBUTED BY 子句，RisingWave将默认使用第一个索引列作为分布式列。RisingWave将数据分布在多个节点上，并使用分布式列来确定基于索引如何分布数据。之所以使用索引的第一列作为Distributed列是为了满足前缀查询的需求。但默认的第一列有可能Cardinality值比较小,这有可能会造成数据不均匀,因此你可以选择指定特定的前缀作为DISTRIBUTED列
+如果您省略 DISTRIBUTED BY 子句，RisingWave将默认使用第一个索引列作为分布式列。RisingWave将数据分布在多个节点上，并使用分布式列来确定基于索引如何分布数据。之所以使用索引的第一列作为Distributed列是为了满足前缀查询的需求。但如果默认的第一列Cardinality比较小,这有可能会造成数据不均匀,因此您可以选择指定特定的前缀作为DISTRIBUTED列
 
 ```sql
 -- 创建带有指定前缀的DISTRIBUTED列索引
