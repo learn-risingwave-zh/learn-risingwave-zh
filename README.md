@@ -14,6 +14,7 @@ _Live Example: https://docusaurus-2-template.vercel.app_
 
 To get started with Docusaurus on Vercel, you can use the [Docusaurus CLI](https://v2.docusaurus.io/docs/installation#scaffold-project-website) to initialize the project:
 
+
 ```shell
 npx create-docusaurus@latest my-website classic
 ```
