@@ -22,14 +22,14 @@ CREATE TABLE t (
 ) APPEND ONLY;
 
 CREATE MATERIALIZED VIEW window_count AS
-SELECT 
+SELECT
     window_start, COUNT(*)
 FROM TUMBLE(events, event_time, INTERVAL '1' MINUTE)
 GROUP BY window_start
 EMIT ON WINDOW CLOSE;
 ```
 
-当表 `t` 新增了一条 `22:01:06` 的数据时，会发出一个值为 `22:01:01` 的水位线信息，在之后表中 `time <= 22:01:01` 的数据都不会再发生改变。此时，会计算 `(21:59:00, 22:00:00)`、`(22:00:00, 22:01:00)` 等 `window_end <= 22:01:00` 的结果。
+当表 `t` 新增了一条 `22:01:06` 的数据时，会发出一个值为 `22:01:01` 的水位线信息，在之后表中 `time <= 22:01:01` 的数据都不会再发生改变。此时，会计算 `window_start` 为 `21:59:00`、`22:00:00` 等 `< 22:01:00` 且尚未计算和输出过的 group 的结果。
 
 ## 窗口闭合时触发的优势
 
