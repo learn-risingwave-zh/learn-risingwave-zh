@@ -14,11 +14,18 @@ RisingWave 有以下几种安装模式：
 
 - **集群 Kubernetes 部署模式（[官方文档](https://docs.risingwave.com/docs/dev/risingwave-kubernetes/)）**：集群 Kubernetes 部署是最为推荐的生产环境部署模式。
 
+:::tip RisingWave Cloud
+
+如果你不希望在本地安装 RisingWave，可以直接使用**免费版** [RisingWave Cloud](https://cloud.risingwave.com/)。这也是使用 RisingWave 最快速便捷的方法，仅需 **5 分钟**即可获得一个功能完整的集群，且无需任何安装操作。
+
+:::
+
 |  | 耗时 | 功能集 | 生产环境使用？ |
 | :: | :: | :: | :: |
 |  [单机试玩模式](https://docs.risingwave.com/docs/current/risingwave-trial/?method=overview)   |  5 分钟      | 局限 | 否 |
 |  [单机 Docker Compose 部署模式](https://docs.risingwave.com/docs/current/risingwave-trial/?method=docker-compose)  | 10-20 分钟        | 完整 | 是，但请三思 |
 |  [集群 Kubernetes 部署模式](https://docs.risingwave.com/docs/dev/risingwave-kubernetes/)  | 不定        | 完整 | 是，推荐 |
+|  [RisingWave Cloud](https://cloud.risingwave.com/)  | 5 分钟        | 完整 | 是，推荐 |
 
 ## 安装方法
 
