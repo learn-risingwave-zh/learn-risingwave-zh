@@ -16,7 +16,7 @@ RisingWave 有以下几种安装模式：
 
 :::tip RisingWave Cloud
 
-如果你不希望在本地安装 RisingWave，可以直接使用**免费版** [RisingWave Cloud](https://cloud.risingwave.com/)。这也是使用 RisingWave 最快速便捷的方法，仅需 **5 分钟**即可获得一个功能完整的集群，且无需任何安装操作。
+如果你不希望在本地安装 RisingWave，可以直接使用**免费版** [RisingWave Cloud](https://cloud.risingwave.com/)。这也是使用 RisingWave 最快速便捷的方法，仅需 **5 分钟**即可创建一个功能完整的集群，且无需任何安装操作。
 
 :::
 
