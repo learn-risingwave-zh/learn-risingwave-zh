@@ -14,4 +14,4 @@ RisingWave 与传统数据库一样，可以存储数据，并允许用户对数
 
 在生产环境中，RisingWave 被广泛应用到实时报表中。用户可以使用各种报表工具，如 [Apache Superset](https://docs.risingwave.com/docs/current/superset-integration/)、[Grafana](https://docs.risingwave.com/docs/current/grafana-integration/) 等，与 RisingWave 对接。
 
-如果你所使用的报表工具并没有列在 RisingWave 官方文档中，也可以直接尝试 PostgreSQL 协议来连接到 RisingWave。这是因为 RisignWave 与 PostgreSQL 协议兼容，因此 PostgreSQL 生态中的系统大多能够与 RisingWave 直接联通。
+如果你所使用的报表工具并没有列在 RisingWave 官方文档中，也可以直接尝试 PostgreSQL 协议来连接到 RisingWave。这是因为 RisingWave 与 PostgreSQL 协议兼容，因此 PostgreSQL 生态中的系统大多能够与 RisingWave 直接联通。
