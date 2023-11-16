@@ -222,3 +222,7 @@ select * from mv_s1;
 而当 `source` 被创建时，RisingWave 并不会立刻从上游消费数据。只有当任意一个物化视图在该 `source` 上创建之后，RisingWave 才开始从 `source` 对应的上游消费数据。
 
 回到以上例子。当 `t1` 被创建的瞬间，RisingWave 已经从上游（也就是 `t1` 所对应的 `datagen`）消费数据，并将数据持久化在 `t1` 内。当创建 `mv_t1` 时，RisingWave 会先读取 `t1` 已经保存下来的数据，再继续消费 `datagen` 的数据。而当 `s1` 被创建时，RisingWave 并不会立刻消费数据。直到 `mv_s1` 被创建的瞬间，RisingWave 才开始消费上游数据。因此我们看到了不同的结果。
+
+## 继续阅读
+
+[连接器 - Source](/docs/advanced/connector.md#source)：了解不同上游数据源系统的具体连接方法和可配置项
