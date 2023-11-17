@@ -43,14 +43,7 @@ WITH (
 
 `table` 与 `source` 有一个非常本质的区别：`table` 会持久化消费的数据，而 `source` 不会。
 
-
-
-
-
-
 比如说，上游如果输入了5条记录：`AA` `BB` `CC` `DD` `EE`，如果使用 `table`，则这5条记录会被持久化到 RisingWave 内部；如果使用 `source`，则这些记录不会被持久化。
-
-
 
 下图展示了在 RisingWave 中创建 `table` 时的逻辑。
 
