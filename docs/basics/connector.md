@@ -1,9 +1,10 @@
 ---
-sidebar_position: 8
+sidebar_position: 6
 ---
 
 # 连接器（connector）
 
+在将数据导入或者导出RisingWave时，我们需要使用连接器。数据导入和导出的概览可参考[数据导入](./ingestion.md)以及[数据导出](./sink.md)。
 
 ## Source
 

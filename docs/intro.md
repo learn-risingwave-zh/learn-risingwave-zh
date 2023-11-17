@@ -6,12 +6,12 @@ sidebar_position: 1
 
 本文的目的是让大家能够在 **10分钟之内** 了解 RisingWave 流数据库是什么。
 
-:::danger 注意1
+:::note 注意1
 
 本教程并非正式官方教程，并且不保证与官方文档内容同步（本教程写作时基于2023年10月发布的 RisingWave 1.3.0版本）。本教程的目的仅是让大家快速学习 RisingWave 流数据库。具体内容还请读者以[**官方文档**](https://docs.risingwave.com/)为准。
 :::
 
-:::danger 注意2
+:::note 注意2
 本教程仍在持续开发中。最新更新日期为：
 **2023年11月1日**。
 欢迎对 RisingWave、流处理、数据库或是数据工程感兴趣的朋友们提出宝贵的建议！
@@ -122,7 +122,6 @@ RisingWave 的内部状态管理方式使得 RisingWave 检查点频率与性能
 RisingWave 是流数据库，自带存储。流计算结果以物化视图形式持久化下来。也就是说，计算过程与计算结果均在 RisingWave 内部。这使得用户可以轻易验证程序正确性。另外，用户可以在物化视图上叠加构建物化视图，也就是说，用户可以将复杂流计算程序拆解成多个物化视图，让程序编写与结果验证变得非常简单。
 :::
 
-
 ### 结果服务架构复杂
 
 由于现有的流处理系统不带存储，用户需要将结果导出到外部系统中去，并在外部系统，如 Cassandra / Redis / PostgreSQL 等，做结果服务（即支持用户高并发查询）。这就意味着用户需要运维两套系统。更困难的是，为了保证结果正确性，用户自己必须考虑如何解决跨系统间的数据一致性问题，带来了不必要的麻烦。
@@ -133,7 +132,6 @@ RisingWave 是流数据库，不仅可以存储数据（包括输入数据与计
 
 :::
 
-
 ### 系统运维难
 
 现有的流处理系统将底层细节暴露给用户，让用户自己配置资源、调节并行度、调节内部状态参数等等。尽管对于高阶用户来说，暴露细节可以调出更好的性能，但是对于多数普通用户来说，暴露这些细节造成了不必要的学习成本，并且可能由于调节失误造成系统效率低下甚至崩溃。
@@ -143,7 +141,6 @@ RisingWave 是流数据库，不仅可以存储数据（包括输入数据与计
 RisingWave 对用户屏蔽不必要的底层细节。用户只需要关注 SQL 代码层面的问题即可。
 :::
 
-
 ## RisingWave 的不足
 
 相比于 Apache Flink、Apache Spark Streaming 等流处理系统，RisingWave **不支持 Java、Python 等可编程接口**。不少 Apache Flink、Apache Spark Streaming 的资深用户选择使用了 Java、Python 等接口来进行编程。如果已有代码逻辑过于复杂、无法使用 SQL 改写，那么可能就不适合使用 RisingWave。当然，RisingWave 支持 Python / Java 等语言的 UDF。因此，如果你的程序可以使用 UDF 来表示，那么还是可以选用 RisingWave 的。
@@ -151,7 +148,6 @@ RisingWave 对用户屏蔽不必要的底层细节。用户只需要关注 SQL �
 尽管与 PostgreSQL 协议兼容，但 RisingWave 并**不支持事务处理**，因此不能在事务处理应用中平替 PostgreSQL。不少用户将 MySQL、PostgreSQL 等 OLTP 数据库与 RisingWave 组合使用：他们使用 OLTP 数据库做事务处理，然后使用 RisingWave 消费数据库的 CDC，在 RisingWave 内部做流计算。
 
 RisingWave 底层存储为行存，适合支持高并发点查。但是，RisingWave **不适合做分析型随机查询**。为支持分析型随机查询，用户还需将数据导入到实时分析数据库中进行操作。不少用户将 RisingWave 与 ClickHouse、Apache Doris 等实时分析数据库组合使用：他们使用 RisingWave 做流计算，同时使用实时分析数据库进行分析型随机查询。
-
 
 ## RisingWave 使用场景
 
