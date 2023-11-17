@@ -225,4 +225,4 @@ select * from mv_s1;
 
 ## 继续阅读
 
-[连接器 - Source](/docs/advanced/connector.md#source)：了解不同上游数据源系统的具体连接方法和可配置项
+[连接器 - Source](/docs/basics/connector.md#source)：详细了解不同上游数据源系统的具体连接方法和可配置项
