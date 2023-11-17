@@ -12,7 +12,7 @@ sidebar_position: 5
 
 我们现在快速验证一下 RisingWave 导出数据的能力。简单起见，这里我们选用 Apache Kafka 作为导出数据的下游。
 
-### 导出数据
+### 准备需导出的数据
 
 我们首先创建一个 `table` ，并使用 `datagen` 工具导入数据：
 
@@ -48,7 +48,7 @@ SHOW TABLES;
 (1 row)
 ```
 
-在创建 `t1` 一段时间后，我们用 `select` 语句查询一下 `t1` ：
+在创建 `t1` 一段时间后，我们用 `SELECT` 语句查询一下 `t1` ：
 
 ```sql
 SELECT count(*) FROM t1;
@@ -56,7 +56,7 @@ SELECT count(*) FROM t1;
 
 ### 直接导出数据
 
-首先我们在本地 localhost 启动 Apache Kafka 监听9092端口（Apache Kafka 的本地部署可以通过 Docker Compose 实现，具体步骤这里先略过）， 接下来我们可以通过创建 `sink` 直接把 table 的数据导出到下游：
+首先我们在本地 localhost 启动 Apache Kafka 监听 9092 端口（Apache Kafka 的本地部署可以通过 Docker Compose 实现，具体步骤这里先略过）， 接下来我们可以通过创建 `sink` 直接把 table 的数据导出到下游：
 
 ```sql
 CREATE SINK test_sink
@@ -70,7 +70,7 @@ WITH (
 FORMAT UPSERT ENCODE JSON;
 ```
 
-这里我们指定了 FORMAT UPSERT ENCODE JSON 来表达 RisingWave 使用 UPSERT 的方式将 JSON 格式的消息输出到下游 Kafka。其中 `primary_key` 里指定了 `v1` 作为下游 Kafka 消息的 key。更多用法详情可以移步 进阶部分
+这里我们指定了 FORMAT UPSERT ENCODE JSON 来表达 RisingWave 使用 UPSERT 的方式将 JSON 格式的消息输出到下游 Kafka。其中 `primary_key` 里指定了 `v1` 作为下游 Kafka 消息的 key。
 
 验证一下 sink 是否创建成功：
 
@@ -90,7 +90,7 @@ Name
 在 console 使用工具查询一下 kafka `test_sink_topic` 的内容：
 
 ```sql
-> kafkacat -b localhost:9092 -C -t test_sink_topic -J                                                                                                                                                                                                                                                      
+> kafkacat -b localhost:9092 -C -t test_sink_topic -J                  
 ```
 
 得到结果（数据会持续生产到kafka直到datagen结束）：
