@@ -45,7 +45,21 @@ RisingWave 允许用户创建级联物化视图（cascading materialized view）
 
 当使用传统流计算引擎（如 Apache Flink、Apache Spark Streaming 等）进行应用开发时，用户往往需要通过拼装流计算引擎与消息队列来表达复杂逻辑。为了对结果进行查询，用户又不得不将流处理结果导出到专门的下游数据库中，并在下游数据库中进行查询。整个架构复杂、运维成本高，且用户需要对跨系统间计算结果一致性负责。
 
+下图展示了使用传统流处理引擎构建应用时的情况。开发者需要运维多个系统，并管理系统之间的依赖性一致性关系。
+
+<img
+  src={require('./img/without_risingwave.jpg').default}
+  alt="RisingWave Architecture"
+/>
+
 而当使用 RisingWave 时，用户只需关注如何构建物化视图，并且可以通过将复杂逻辑拆分成多个级联物化视图来降低开发复杂度。RisingWave 保证物化视图一致性、持久化、可被高并发查询。用户只需运维一套 RisingWave 集群，RisingWave 负责保证不同物化视图之间的一致性。
+
+下图展示了使用 RisingWave 流数据库开发应用的情况。开发者只需运维一个系统，并无需考虑任何不同系统组件之间的关系。
+
+<img
+  src={require('./img/with_risingwave.jpg').default}
+  alt="RisingWave Architecture"
+/>
 
 ## 为什么选用 RisingWave 做物化视图？
 
