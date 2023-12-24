@@ -10,6 +10,11 @@ sidebar_position: 2
 
 RisingWave 本身能力是 Flink SQL的超集。从能力角度来讲，Flink SQL 的用户完全可以较为容易的迁移到 RisingWave 上。Flink SQL 也不具备 RisingWave 的一些功能，例如层级物化视图等。
 
+<img
+  src={require('./img/RisingWave vs Flink.jpg').default}
+  alt="RisingWave vs Flink"
+/>
+
 RisingWave 使用的是 PostgreSQL 语法，相信学习与使用门槛要远低于 Flink SQL。但要注意的是，RisingWave 与 Flink SQL 在语法上仍然有一些细微差别，因此用户还是可能需要对部分查询进行改写。
 
 
