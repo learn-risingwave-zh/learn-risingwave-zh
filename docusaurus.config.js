@@ -8,7 +8,7 @@ const thumbnail = `https://risingwavetutorial.com/img/thumbnail.png`;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "RisingWave 中文教程（试读版）",
+  title: "RisingWave 中文教程",
   tagline: "面向流计算爱好者的动手教程！",
   url: "https://risingwavetutorial.com/",
   baseUrl: "/",
