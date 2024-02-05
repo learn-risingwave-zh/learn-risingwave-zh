@@ -64,7 +64,7 @@ RisingWave 允许用户创建级联物化视图（cascading materialized view）
 ## 为什么选用 RisingWave 做物化视图？
 
 如果你拥有使用数据库的经验，应该在各类数据库中均遇到过物化视图。传统数据库如 PostgreSQL，数据仓库如 Redshift 与 Snowflake，
-实时分析数据库如 ClickHouse 与 Apache Doris 等，都拥有物化视图能力。但 RisingWave 的物化视图与其他数据库的物化视图有以下几个重要特征：
+实时分析数据库如 ClickHouse 与 Apache Doris 等，都拥有物化视图能力。但 RisingWave 的物化视图相较其他数据库的物化视图有以下几个重要特征：
 
 ### 实时性
 
